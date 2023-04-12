@@ -1,0 +1,42 @@
+{
+    "compilerOptions": {
+        // "allowSyntheticDefaultImports": false,
+        // "downlevelIteration": true,
+        // "importHelpers": true,
+        // "checkJs": false,
+        // "forceConsistentCasingInFileNames": true,
+        // "noImplicitReturns": true,
+        // "noImplicitThis": true,
+        // "skipLibCheck": true,
+        // "strictNullChecks": false,
+        // "suppressImplicitAnyIndexErrors": true,
+        "outDir": "./dist",
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "target": "ES2015",
+        "sourceMap": true,
+        "jsx": "react",
+        "allowJs": true,
+        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        // "declaration": false,
+        "esModuleInterop": true,
+        // "noLib": false,
+        // "useDefineForClassFields": true
+        "types": [
+            "webpack-env",
+            "jest"
+        ],
+        "lib": [
+            "ES2015",
+            "DOM"
+        ]
+    },
+    "compileOnSave": true,
+    "exclude": [
+        "node_modules"
+    ]
+}
