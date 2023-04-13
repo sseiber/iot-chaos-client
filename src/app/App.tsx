@@ -8,9 +8,15 @@ import { AuthenticationState } from './stores/session';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
 import { InfoDialogServiceProvider } from './components/InfoDialogContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import CreateConfigPage from './pages/CreateConfigPage';
+import ConfigureExperimentsPage from './pages/ConfigureExperimentsPage';
 import HomePage from './pages/HomePage';
 import UserPage from './pages/user/UserPage';
+
+export const AppRoutes = {
+    Home: '/',
+    User: '/user',
+    Config: '/config'
+};
 
 const App: FC = observer((props: any) => {
     const history = useHistory();
@@ -39,10 +45,10 @@ const App: FC = observer((props: any) => {
     }, []);
 
     let logoMenuTitle = `LoopBox`;
-    let logoMenuLink = `/`;
+    let logoMenuLink = AppRoutes.Home;
     if (sessionStore.authenticationState === AuthenticationState.Authenticated) {
         logoMenuTitle = `Home`;
-        logoMenuLink = `/user`;
+        logoMenuLink = AppRoutes.User;
     }
 
     let userNavItem;
@@ -90,7 +96,7 @@ const App: FC = observer((props: any) => {
                 {/* {PRODUCTION ? null : <DevTools />} */}
                 <Menu fixed="top" inverted color="grey" style={{ padding: '0em 5em' }}>
                     <Menu.Item as={Link} to={logoMenuLink} header>
-                        <Image size="mini" src={`/assets/applogo50.png`} style={{ marginRight: '1.5em' }} />
+                        <Image size={'mini'} src={`/assets/applogo50.png`} style={{ marginRight: '1.5em' }} />
                         {logoMenuTitle}
                     </Menu.Item>
                     <Menu.Menu position="right">
@@ -101,9 +107,9 @@ const App: FC = observer((props: any) => {
                     <Grid.Row>
                         <Grid.Column>
                             <Switch>
-                                <Route exact path="/" component={HomePage} />
-                                <AuthenticatedRoute exact path="/user" component={UserPage} />
-                                <AuthenticatedRoute exact path="/createconfig" component={CreateConfigPage} />
+                                <Route exact path={AppRoutes.Home} component={HomePage} />
+                                <AuthenticatedRoute exact path={AppRoutes.User} component={UserPage} />
+                                <AuthenticatedRoute exact path={AppRoutes.Config} component={ConfigureExperimentsPage} />
                                 <Redirect from={location.pathname} to="/" />
                                 {props.children}
                             </Switch>

@@ -17,7 +17,7 @@ const HomePage: FC = observer(() => {
         <Grid style={{ padding: '5em 5em' }}>
             <Grid.Row>
                 <Grid.Column>
-                    <Message size="huge">
+                    <Message size={'huge'}>
                         <Message.Header>LoopBox</Message.Header>
                         <p>{message}</p>
                     </Message>

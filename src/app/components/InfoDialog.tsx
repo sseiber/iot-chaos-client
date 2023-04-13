@@ -27,7 +27,7 @@ export const InfoDialog: FC<IInfoDialogProps> = ((props: IInfoDialogProps) => {
     } = props;
 
     return (
-        <Modal size="small" open={visible} onClose={closeCallback}>
+        <Modal size={'small'} open={visible} onClose={closeCallback}>
             <Modal.Header>{title}</Modal.Header>
             <Modal.Content>
                 {description}
@@ -35,16 +35,16 @@ export const InfoDialog: FC<IInfoDialogProps> = ((props: IInfoDialogProps) => {
             <Modal.Actions>
                 {variant === 'confirm' && (
                     <>
-                        <Button size="small" color="grey" onClick={closeCallback} autoFocus>
+                        <Button size={'small'} color="grey" onClick={closeCallback} autoFocus>
                             Cancel
                         </Button>
-                        <Button size="small" color="blue" onClick={okCallback}>
+                        <Button size={'small'} color="blue" onClick={okCallback}>
                             {actionLabel}
                         </Button>
                     </>
                 )}
                 {variant === 'info' && (
-                    <Button size="small" color="blue" onClick={okCallback}>
+                    <Button size={'small'} color="blue" onClick={okCallback}>
                         OK
                     </Button>
                 )}

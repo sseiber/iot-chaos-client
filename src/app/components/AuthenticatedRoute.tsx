@@ -3,6 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../stores/store';
 import { AuthenticationState } from '../stores/session';
+import { AppRoutes } from '../App';
 
 interface IAuthenticatedRoute {
     exact?: boolean;
@@ -28,7 +29,7 @@ const AuthenticatedRoute: FC<IAuthenticatedRoute> = observer((props: IAuthentica
     }
 
     return (
-        <Redirect to={{ pathname: '/' }} />
+        <Redirect to={{ pathname: AppRoutes.Home }} />
     );
 });
 

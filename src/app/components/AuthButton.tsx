@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { Menu, Icon } from 'semantic-ui-react';
 import { useStore } from '../stores/store';
 import { AuthenticationState } from '../stores/session';
+import { AppRoutes } from '../App';
 
 const AuthenticationButton: FC = observer(() => {
     const {
@@ -24,7 +25,7 @@ const AuthenticationButton: FC = observer(() => {
         case AuthenticationState.Unauthenticated:
         case AuthenticationState.CouldNotAuthenticate:
             authenticationButton = (
-                <Menu.Item href="/api/v1/auth/signin?redirectPath=/user">
+                <Menu.Item href={`/api/v1/auth/signin?redirectPath=${AppRoutes.User}`}>
                     <Icon name="sign in alternate" />
                     <span>&nbsp;&nbsp;Sign in</span>
                 </Menu.Item>

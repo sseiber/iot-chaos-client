@@ -3,23 +3,19 @@ import {
     requestHelper
 } from './requestHelper';
 
-export async function getUserLoopBoxesApi(userId: string): Promise<IServiceResponse> {
+export async function getUserExperimentsApi(userId: string): Promise<IServiceResponse> {
     return requestHelper({
         method: 'get',
-        url: `/api/v1/loopbox/user/${userId}`
+        url: `/api/v1/loopbox/config/${userId}`
     });
 }
 
-export async function claimLoopBoxTokenApi(claimInfo: any): Promise<IServiceResponse> {
-    return requestHelper(
-        {
-            method: 'post',
-            url: `/api/v1/loopbox/claim/${claimInfo.loopBoxClaimToken}`,
-            data: {
-                userId: claimInfo.userId,
-                userProfile: claimInfo.userProfile
-            }
-        });
+export async function configureUserExperimentsApi(userId: string, experiments: IChaosExperiment[]): Promise<IServiceResponse> {
+    return requestHelper({
+        method: 'post',
+        url: `/api/v1/loopbox/config/${userId}`,
+        data: experiments
+    });
 }
 
 export async function getLoopBoxServerVersionApi(): Promise<IServiceResponse> {

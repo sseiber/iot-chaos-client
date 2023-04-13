@@ -1,11 +1,10 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { ILoopBoxProvision } from 'loopbox-types';
 import {
     getAuthTokenApi
 } from '../../api/session';
 import {
-    getUserLoopBoxesApi,
-    claimLoopBoxTokenApi,
+    getUserExperimentsApi,
+    configureUserExperimentsApi,
     getLoopBoxServerVersionApi
 } from '../../api/loopBox';
 import { succeeded } from '../../api/requestHelper';
@@ -19,11 +18,10 @@ export class LoopBoxStore {
     public loading = true;
     public version = '';
     public authToken = '';
-    public loopBoxItems: ILoopBoxProvision[] = [];
-    public loopBox = '';
+    public chaosExperiments: IChaosExperiment[] = [];
 
-    public async getUserLoopBoxes(userId: string): Promise<IStoreResult> {
-        const loopBoxResult: IStoreResult = {
+    public async getUserExperiments(userId: string): Promise<IStoreResult> {
+        const result: IStoreResult = {
             result: true,
             message: 'SUCCESS'
         };
@@ -33,31 +31,31 @@ export class LoopBoxStore {
         });
 
         try {
-            const response = await getUserLoopBoxesApi(userId);
+            const response = await getUserExperimentsApi(userId);
             if (succeeded(response)) {
                 runInAction(() => {
-                    this.loopBoxItems = response.data;
+                    this.chaosExperiments = response.data;
                 });
             }
             else {
-                loopBoxResult.result = false;
-                loopBoxResult.message = response.message;
+                result.result = false;
+                result.message = response.message;
             }
         }
         catch (ex) {
-            loopBoxResult.result = false;
-            loopBoxResult.message = ex.message;
+            result.result = false;
+            result.message = ex.message;
         }
 
         runInAction(() => {
             this.loading = false;
         });
 
-        return loopBoxResult;
+        return result;
     }
 
-    public async claimLoopBoxToken(claimInfo: any): Promise<IStoreResult> {
-        const loopBoxResult: IStoreResult = {
+    public async configureUserExperiments(userId: string, experiments: IChaosExperiment[]): Promise<IStoreResult> {
+        const result: IStoreResult = {
             result: true,
             message: 'SUCCESS'
         };
@@ -67,31 +65,26 @@ export class LoopBoxStore {
         });
 
         try {
-            const response = await claimLoopBoxTokenApi(claimInfo);
-            if (succeeded(response)) {
-                runInAction(() => {
-                    this.loopBox = response.data;
-                });
-            }
-            else {
-                loopBoxResult.result = false;
-                loopBoxResult.message = response.message;
+            const response = await configureUserExperimentsApi(userId, experiments);
+            if (!succeeded(response)) {
+                result.result = false;
+                result.message = response.message;
             }
         }
         catch (ex) {
-            loopBoxResult.result = false;
-            loopBoxResult.message = ex.message;
+            result.result = false;
+            result.message = ex.message;
         }
 
         runInAction(() => {
             this.loading = false;
         });
 
-        return loopBoxResult;
+        return result;
     }
 
     public async getLoopBoxServerVersion(): Promise<IStoreResult> {
-        const loopBoxResult: IStoreResult = {
+        const result: IStoreResult = {
             result: true,
             message: 'SUCCESS'
         };
@@ -108,24 +101,24 @@ export class LoopBoxStore {
                 });
             }
             else {
-                loopBoxResult.result = false;
-                loopBoxResult.message = response.message;
+                result.result = false;
+                result.message = response.message;
             }
         }
         catch (ex) {
-            loopBoxResult.result = false;
-            loopBoxResult.message = ex.message;
+            result.result = false;
+            result.message = ex.message;
         }
 
         runInAction(() => {
             this.loading = false;
         });
 
-        return loopBoxResult;
+        return result;
     }
 
     public async getAuthToken(scope: string[]): Promise<IStoreResult> {
-        const loopBoxResult: IStoreResult = {
+        const result: IStoreResult = {
             result: true,
             message: 'SUCCESS'
         };
@@ -142,19 +135,19 @@ export class LoopBoxStore {
                 });
             }
             else {
-                loopBoxResult.result = false;
-                loopBoxResult.message = response.message;
+                result.result = false;
+                result.message = response.message;
             }
         }
         catch (ex) {
-            loopBoxResult.result = false;
-            loopBoxResult.message = ex.message;
+            result.result = false;
+            result.message = ex.message;
         }
 
         runInAction(() => {
             this.loading = false;
         });
 
-        return loopBoxResult;
+        return result;
     }
 }

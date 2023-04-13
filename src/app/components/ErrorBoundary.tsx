@@ -55,7 +55,7 @@ export class ErrorBoundary extends Component<IErrorBoundaryProps, IErrorBoundary
 
         if (errorInfo) {
             return (
-                <Modal size="mini" open={hasError}>
+                <Modal size={'mini'} open={hasError}>
                     <Modal.Header>Error</Modal.Header>
                     <Modal.Content>
                         <Form>

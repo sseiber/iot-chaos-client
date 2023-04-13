@@ -5,7 +5,8 @@ import { observer } from 'mobx-react-lite';
 import { useAsyncEffect } from 'use-async-effect';
 import { useStore } from '../../stores/store';
 import { useInfoDialog, showInfoDialog } from '../../components/InfoDialogContext';
-import LoopBoxPanel from './LoopBoxPanel';
+import ExperimentsPanel from './ExperimentsPanel';
+import { AppRoutes } from '../../App';
 
 const UserPage: FC = observer(() => {
     const history = useHistory();
@@ -18,7 +19,7 @@ const UserPage: FC = observer(() => {
     useAsyncEffect(async isMounted => {
         await loopBoxStore.getLoopBoxServerVersion();
 
-        const response = await loopBoxStore.getUserLoopBoxes(sessionStore.userId);
+        const response = await loopBoxStore.getUserExperiments(sessionStore.userId);
 
         if (!isMounted()) {
             return;
@@ -34,10 +35,10 @@ const UserPage: FC = observer(() => {
         }
     }, []);
 
-    const onClaimLoopBoxClicked = (e: any) => {
+    const onConfigureExperimentsClicked = (e: any) => {
         e.preventDefault();
 
-        history.push('/createconfig');
+        history.push(AppRoutes.Config);
     };
 
     const userDisplayName = sessionStore.displayName || 'LoopBox User';
@@ -51,11 +52,11 @@ const UserPage: FC = observer(() => {
                         <Message.Header>Chaos Client</Message.Header>
                         <p>{`(backend service-v${loopBoxStore.version})`}</p>
                     </Message>
-                    <LoopBoxPanel
+                    <ExperimentsPanel
                         userDisplayName={userDisplayName}
                         userLinkUriProps={userLinkUriProps}
-                        loopBoxItems={loopBoxStore.loopBoxItems}
-                        onClaimLoopBoxClicked={onClaimLoopBoxClicked}
+                        chaosExperiments={loopBoxStore.chaosExperiments}
+                        onConfigureExperimentsClicked={onConfigureExperimentsClicked}
                     />
                 </Grid.Column>
             </Grid.Row>
