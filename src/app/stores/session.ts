@@ -58,7 +58,7 @@ export class SessionStore {
                     this.userSessionStatistics.message = response.message;
                 });
 
-                await this.startTest();
+                // await this.startTest();
             }
             else {
                 runInAction(() => {

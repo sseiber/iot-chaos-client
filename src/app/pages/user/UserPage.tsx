@@ -6,7 +6,6 @@ import { useAsyncEffect } from 'use-async-effect';
 import { useStore } from '../../stores/store';
 import { useInfoDialog, showInfoDialog } from '../../components/InfoDialogContext';
 import ExperimentsPanel from './ExperimentsPanel';
-import StatisticsPanel from './StatisticsPanel';
 import { AppRoutes } from '../../App';
 
 const UserPage: FC = observer(() => {
@@ -58,13 +57,6 @@ const UserPage: FC = observer(() => {
                         userLinkUriProps={userLinkUriProps}
                         chaosExperiments={loopBoxStore.chaosExperiments}
                         onConfigureExperimentsClicked={onConfigureExperimentsClicked}
-                    />
-                </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-                <Grid.Column>
-                    <StatisticsPanel
-                        userSessionStatistics={sessionStore.userSessionStatistics}
                     />
                 </Grid.Column>
             </Grid.Row>

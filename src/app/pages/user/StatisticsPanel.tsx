@@ -8,7 +8,7 @@ interface IStatisticsPanelProps {
 
 const StatisticsPanel: FC<IStatisticsPanelProps> = ((props: IStatisticsPanelProps) => {
     const {
-        userSessionStatistics,
+        userSessionStatistics
     } = props;
 
     return (
