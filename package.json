@@ -1,6 +1,6 @@
 {
     "name": "iot-chaos-client",
-    "version": "3.0.36",
+    "version": "3.0.37",
     "description": "IoT chaos client",
     "main": "index.ts",
     "scripts": {
