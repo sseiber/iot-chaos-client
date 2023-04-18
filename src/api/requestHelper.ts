@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export interface IServiceResponse {
     statusCode: number;
+    responseTime: number;
     message: string;
     data?: any;
 }
@@ -13,6 +14,7 @@ export function succeeded(response: IServiceResponse): boolean {
 export async function requestHelper(config: any): Promise<IServiceResponse> {
     const response: IServiceResponse = {
         statusCode: 200,
+        responseTime: 0,
         message: 'SUCCESS'
     };
 
@@ -20,6 +22,7 @@ export async function requestHelper(config: any): Promise<IServiceResponse> {
         const axiosResponse = await axios.request(config);
 
         response.statusCode = axiosResponse.status;
+        response.responseTime = axiosResponse.headers['x-response-time'];
         response.message = axiosResponse.statusText;
 
         if (axiosResponse.data) {

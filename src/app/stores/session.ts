@@ -9,6 +9,12 @@ export enum AuthenticationState {
     CouldNotAuthenticate = 'CouldNotAuthenticate'
 }
 
+export interface IUserSessionStatistics {
+    success: boolean;
+    responseTime: number;
+    message: string;
+}
+
 export class SessionStore {
     constructor() {
         makeAutoObservable(this);
@@ -21,6 +27,11 @@ export class SessionStore {
     public email: string;
     public authProvider: string;
     public redirectPath: string;
+    public userSessionStatistics: IUserSessionStatistics = {
+        success: false,
+        responseTime: 0,
+        message: ''
+    };
 
     public get isProduction(): boolean {
         return process.env.NODE_ENV === 'production';
@@ -41,11 +52,21 @@ export class SessionStore {
                     this.displayName = response.data.displayName;
                     this.email = response.data.email;
                     this.authProvider = response.data.authProvider;
+
+                    this.userSessionStatistics.success = true;
+                    this.userSessionStatistics.responseTime = response.responseTime;
+                    this.userSessionStatistics.message = response.message;
                 });
+
+                await this.startTest();
             }
             else {
                 runInAction(() => {
                     this.authenticationState = AuthenticationState.CouldNotAuthenticate;
+
+                    this.userSessionStatistics.responseTime = response.responseTime || 0;
+                    this.userSessionStatistics.message = response.message;
+                    this.userSessionStatistics.success = true;
                 });
             }
         }
@@ -53,6 +74,35 @@ export class SessionStore {
             runInAction(() => {
                 this.authenticationState = AuthenticationState.CouldNotAuthenticate;
             });
+        }
+    }
+
+    public async startTest(): Promise<void> {
+        setInterval(async () => {
+            await this.getUserSessionTest();
+        }, 1000);
+    }
+
+    private async getUserSessionTest(): Promise<void> {
+        try {
+            const response = await getUserSessionApi();
+            if (succeeded(response)) {
+                runInAction(() => {
+                    this.userSessionStatistics.success = true;
+                    this.userSessionStatistics.responseTime = response.responseTime;
+                    this.userSessionStatistics.message = response.message;
+                });
+            }
+            else {
+                runInAction(() => {
+                    this.userSessionStatistics.responseTime = response.responseTime || 0;
+                    this.userSessionStatistics.message = response.message;
+                    this.userSessionStatistics.success = true;
+                });
+            }
+        }
+        catch (_ex) {
+            // nothing
         }
     }
 }
