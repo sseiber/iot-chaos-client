@@ -10,7 +10,7 @@ const HomePage: FC = observer(() => {
     } = useStore();
 
     const message = sessionStore.authenticationState === AuthenticationState.Authenticated ?
-        'LoopBox' :
+        'Chaos Client' :
         'Sign in to continue...';
 
     return (
@@ -18,7 +18,7 @@ const HomePage: FC = observer(() => {
             <Grid.Row>
                 <Grid.Column>
                     <Message size={'huge'}>
-                        <Message.Header>LoopBox</Message.Header>
+                        <Message.Header>Chaos Client</Message.Header>
                         <p>{message}</p>
                     </Message>
                 </Grid.Column>

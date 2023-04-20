@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Message, Grid } from 'semantic-ui-react';
+import { Message, Grid, Dimmer, Loader, Segment } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
 import { useAsyncEffect } from 'use-async-effect';
 import { useStore } from '../../stores/store';
@@ -52,12 +52,17 @@ const UserPage: FC = observer(() => {
                         <Message.Header>Chaos Client</Message.Header>
                         <p>{`(backend service-v${loopBoxStore.version})`}</p>
                     </Message>
-                    <ExperimentsPanel
-                        userDisplayName={userDisplayName}
-                        userLinkUriProps={userLinkUriProps}
-                        chaosExperiments={loopBoxStore.chaosExperiments}
-                        onConfigureExperimentsClicked={onConfigureExperimentsClicked}
-                    />
+                    <Segment basic vertical>
+                        <Dimmer active={loopBoxStore.loading} inverted>
+                            <Loader inverted>Loading...</Loader>
+                        </Dimmer>
+                        <ExperimentsPanel
+                            userDisplayName={userDisplayName}
+                            userLinkUriProps={userLinkUriProps}
+                            chaosExperiments={loopBoxStore.chaosExperiments}
+                            onConfigureExperimentsClicked={onConfigureExperimentsClicked}
+                        />
+                    </Segment>
                 </Grid.Column>
             </Grid.Row>
         </Grid>

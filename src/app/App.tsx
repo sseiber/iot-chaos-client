@@ -11,10 +11,12 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import ConfigureExperimentsPage from './pages/ConfigureExperimentsPage';
 import HomePage from './pages/HomePage';
 import UserPage from './pages/user/UserPage';
+import UserPage2 from './pages/user/UserPage2';
 
 export const AppRoutes = {
     Home: '/',
     User: '/user',
+    User2: '/user2',
     Config: '/config'
 };
 
@@ -44,7 +46,7 @@ const App: FC = observer((props: any) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    let logoMenuTitle = `LoopBox`;
+    let logoMenuTitle = `Chaos Client`;
     let logoMenuLink = AppRoutes.Home;
     if (sessionStore.authenticationState === AuthenticationState.Authenticated) {
         logoMenuTitle = `Home`;
@@ -109,6 +111,7 @@ const App: FC = observer((props: any) => {
                             <Switch>
                                 <Route exact path={AppRoutes.Home} component={HomePage} />
                                 <AuthenticatedRoute exact path={AppRoutes.User} component={UserPage} />
+                                <AuthenticatedRoute exact path={AppRoutes.User2} component={UserPage2} />
                                 <AuthenticatedRoute exact path={AppRoutes.Config} component={ConfigureExperimentsPage} />
                                 <Redirect from={location.pathname} to="/" />
                                 {props.children}
